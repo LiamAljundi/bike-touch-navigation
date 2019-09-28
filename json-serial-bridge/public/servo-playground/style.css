@@ -28,3 +28,9 @@ a:hover {
   margin-top: 1rem;
   background-color: white;
 }
+
+.button{
+  width: 100px;
+  height: 30px;
+  background-color: pink;
+}

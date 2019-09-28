@@ -3,44 +3,69 @@ const CMD_WRITE_US = 1;
 const CMD_READ = 2;
 const CMD_DETACH = 3;
 
+const turnToRight= document.getElementById("turnRight");
+const turnToLeft= document.getElementById("turnLeft")
+
 let socket = null;
 
 // Set up event handlers and websocket
 init();
 
+function turnRight() {
+
+  turnToRight.addEventListener('click', () => {
+    socket.send(1);
+    console.log("Right pressed");
+  });
+
+};
+turnRight()
+  
+
+
+function turnLeft() {
+
+  turnToLeft.addEventListener('click', () => {
+    socket.send(2);
+    console.log("Left pressed");
+  });
+
+};
+turnLeft()
+
 // Sends command to bridge (which forwards to Arduino)
-function write(servo, position, durationMs) {
-  if (position < 0) throw new Error('Must be greater than zero');
-  if (position > 180) throw new Error('Must be equal or less than 180');
+// function write(servo, position, durationMs) {
+//   if (position < 0) throw new Error('Must be greater than zero');
+//   if (position > 180) throw new Error('Must be equal or less than 180');
 
-  console.log('Write ' + servo + ' = ' + position);
-  socket.send(JSON.stringify({
-    cmd: CMD_WRITE,
-    servo: servo,
-    opt: durationMs,
-    pos: position
-  }));
-}
+//   console.log('Write ' + servo + ' = ' + position);
+//   socket.send(JSON.stringify({
+//     cmd: CMD_WRITE,
+//     servo: servo,
+//     opt: durationMs,
+//     pos: position
+//   }));
+// }
 
-function detach(servo) {
-  console.log('Detach ' + servo);
-  socket.send(JSON.stringify({
-    cmd: CMD_DETACH,
-    servo: servo,
-    pos: 0
-  }));
-}
+// function detach(servo) {
+//   console.log('Detach ' + servo);
+//   socket.send(JSON.stringify({
+//     cmd: CMD_DETACH,
+//     servo: servo,
+//     pos: 0
+//   }));
+// }
 
-function writeMicroseconds(servo, us) {
-  if (us < 0) throw new Error('Must be greater than zero');
+// function writeMicroseconds(servo, us) {
+//   if (us < 0) throw new Error('Must be greater than zero');
 
-  console.log('Write uS: ' + us);
-  socket.send(JSON.stringify({
-    cmd: CMD_WRITE_US,
-    servo: servo,
-    pos: us
-  }));
-}
+//   console.log('Write uS: ' + us);
+//   socket.send(JSON.stringify({
+//     cmd: CMD_WRITE_US,
+//     servo: servo,
+//     pos: us
+//   }));
+// }
 
 
 function onPositionUpdate(d) {
@@ -52,31 +77,31 @@ function onPositionUpdate(d) {
 
 function init() {
   // Continuous rotation
-  document.getElementById('btnRotate').addEventListener('click', () => {
-    var speed = document.getElementById('inputContinuousSpeed').value;
-    var duration = document.getElementById('inputContinuousDuration').value;
+  // document.getElementById('btnRotate').addEventListener('click', () => {
+  //   var speed = document.getElementById('inputContinuousSpeed').value;
+  //   var duration = document.getElementById('inputContinuousDuration').value;
 
-    setStatus(`Rotating at speed: ${speed}, duration: ${duration}`);
-    write(0, speed, duration);
-  });
+  //   setStatus(`Rotating at speed: ${speed}, duration: ${duration}`);
+  //   write(0, speed, duration);
+  // });
 
-  document.getElementById('btnRotationStop').addEventListener('click', () => {
-    setStatus('Stopping rotation');
-    write(0, 90, 0);
-    detach(0);
-  });
+  // document.getElementById('btnRotationStop').addEventListener('click', () => {
+  //   setStatus('Stopping rotation');
+  //   write(0, 90, 0);
+  //   detach(0);
+  // });
 
-  // Single rotation
-  document.getElementById('btnMove').addEventListener('click', () => {
-    var pos = document.getElementById('inputPosition').value;
-    setStatus(`Moving to ${pos}`);
-    write(1, pos, 0);
-  });
+  // // Single rotation
+  // document.getElementById('btnMove').addEventListener('click', () => {
+  //   var pos = document.getElementById('inputPosition').value;
+  //   setStatus(`Moving to ${pos}`);
+  //   write(1, pos, 0);
+  // });
 
-  document.getElementById('btnSingleStop').addEventListener('click', () => {
-    setStatus('Stopping');
-    detach(1);
-  });
+  // document.getElementById('btnSingleStop').addEventListener('click', () => {
+  //   setStatus('Stopping');
+  //   detach(1);
+  // });
 
   socket = new ReconnectingWebsocket('ws://' + location.host + '/serial');
   socket.addEventListener('message', evt => {
