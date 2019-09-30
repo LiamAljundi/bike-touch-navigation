@@ -13,8 +13,10 @@
   <h1>json-serial-bridge</h1>
   <h2>Send</h2>
   <form id="sendForm">
-    <input type="text" value="{blink:5}" id="sendtoSerial"></input>
-    <input type="submit" value="Send">
+    <!-- <input type="text" value="{blink:5}" id="sendtoSerial"></input>
+    <input type="submit" value="Send"> -->
+    <input type="submit" class="sendtoSerial" value="Turn Right" id="turnRight" onclick="turnRight()"/>
+    <input type="submit" class="sendtoSerial" value="Turn Left" id="turnLeft" onclick="turnLeft()" />
   </form>
 
   <h2>Received</h2>

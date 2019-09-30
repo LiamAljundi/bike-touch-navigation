@@ -1,7 +1,7 @@
 var lastMsgEl = null;
 if (document.readyState != 'loading') onDocumentReady();
 else document.addEventListener('DOMContentLoaded', onDocumentReady);
-
+console.log("fileFound");
 function handleData(obj) {
   // At this point we could call functions based on received data etc.
   // eg: if (obj.x > 10) runThis()
@@ -11,7 +11,9 @@ function onDocumentReady() {
   var socket = new ReconnectingWebsocket('ws://' + location.host + '/serial');
   var sendFormEl = document.getElementById('sendForm');
   var lastMsg = null;
+
   lastMsgEl = document.getElementById('lastMsg');
+
 
   // Handle incoming messages
   socket.onmessage = function(evt) {
@@ -26,6 +28,8 @@ function onDocumentReady() {
       console.log('Received: ' + d);
       lastMsg = d;
       return;
+
+
     }
 
     // Pass parsed object over to a function to handle
@@ -43,7 +47,19 @@ function onDocumentReady() {
 
   sendFormEl.addEventListener('submit', function(evt) {
     evt.preventDefault();
-    var send = document.getElementById('sendtoSerial').value;
-    socket.send(send);
-  });
+    var send = document.getElementsByClassName('sendtoSerial').value;
+    socket.send(send);  
+})
+
+
 }
+
+function turnRight() {
+  document.getElementsByClassName("sendtoSerial").value = '0';
+  console.log('Right pressed');
+  };
+  
+  function turnLeft() {
+  document.getElementsByClassName("sendtoSerial").value = '1';
+  console.log('Left pressed');
+  };
