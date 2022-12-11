@@ -16,7 +16,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~4.1.1",
     "errorhandler": "^1.5.0",
-    "express": "~4.17.0",
+    "express": "~4.17.3",
     "express-ws": "^4.0.0",
     "middleware-static-livereload": "1.2.7",
     "morgan": "~1.9.0",
