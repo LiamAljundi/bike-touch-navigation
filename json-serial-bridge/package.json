@@ -19,7 +19,7 @@
     "express": "~4.17.0",
     "express-ws": "^4.0.0",
     "middleware-static-livereload": "1.2.7",
-    "morgan": "~1.9.0",
+    "morgan": "~1.11.0",
     "node-dev": "^4.0.0",
     "pug": "2.0.3",
     "serialport": "^7.1.5",
