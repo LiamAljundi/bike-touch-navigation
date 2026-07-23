@@ -5,8 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var SerialPort = require('serialport');
-var Readline = require('@serialport/parser-readline');
+var { SerialPort, ReadlineParser } = require('serialport');
 var expressWs = require('express-ws');
 var errorHandler = require('errorhandler');
 
@@ -44,21 +43,21 @@ if (program.args.length == 0) program.help();
 return;
 
 function listPorts() {
-  SerialPort.list(function (err, ports) {
-    if (err) {
+  SerialPort.list()
+    .then(function (ports) {
+      log('Ports:');
+      let aPort = 'COM1';
+      ports.forEach(function (port) {
+        aPort = port.path;
+        log(' ' + chalk.bold(port.path) + ' - ' + port.manufacturer);
+      });
+      log();
+      log('Usage example: node app.js --serial ' + aPort + ' bridge');
+      process.exit();
+    })
+    .catch(function (err) {
       log('Error, could not list ports: ' + err);
-      return;
-    }
-    log('Ports:');
-    let aPort = 'COM1';
-    ports.forEach(function (port) {
-      aPort = port.comName;
-      log(' ' + chalk.bold(port.comName) + ' - ' + port.manufacturer);
     });
-    log();
-    log('Usage example: node app.js --serial ' + aPort + ' bridge');
-    process.exit();
-  });
 }
 
 function bridgePorts(program) {
@@ -124,8 +123,7 @@ function setupSerial(program, serialWs) {
     '...'
   );
   port = new SerialPort(
-    program.serial,
-    { baudRate: program.baud },
+    { path: program.serial, baudRate: program.baud },
     function (err) {
       if (err) {
         log(chalk.red(err.message));
@@ -147,7 +145,7 @@ function setupSerial(program, serialWs) {
   });
 
   // Parse data as a series of newline-separated chunks
-  const parser = port.pipe(new Readline());
+  const parser = port.pipe(new ReadlineParser());
 
   // Got a chunk
   parser.on('data', function (data) {
