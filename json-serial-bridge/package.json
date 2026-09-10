@@ -19,7 +19,7 @@
     "express": "^4.22.2",
     "express-ws": "^5.0.2",
     "middleware-static-livereload": "^1.5.3",
-    "morgan": "^1.11.0",
+    "morgan": "^1.12.0",
     "serialport": "^13.0.0",
     "serve-favicon": "~2.5.0",
     "ws": "^7.5.13"
