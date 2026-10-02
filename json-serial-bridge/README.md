@@ -27,6 +27,8 @@ Afterwards, you'll want to adapt the example Arduino sketch to interact with the
 
 ## Step 2: Your computer
 
+Requires Node.js 18.3 or newer.
+
 In the directory you've got this sample:
 
 Run `npm install`

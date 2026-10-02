@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /json-serial-bridge
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    groups:
+      # One PR for all security fixes, one for routine minor/patch bumps,
+      # instead of a separate PR (and email) per package.
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+      minor-and-patch:
+        applies-to: version-updates
+        update-types: [minor, patch]
+        patterns: ["*"]
