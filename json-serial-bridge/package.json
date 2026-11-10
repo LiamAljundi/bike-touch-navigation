@@ -10,10 +10,10 @@
     "node": ">=18.3"
   },
   "devDependencies": {
-    "eslint": "^10.7.0"
+    "eslint": "^10.14.0"
   },
   "dependencies": {
     "serialport": "^13.0.0",
-    "ws": "^8.21.1"
+    "ws": "^8.22.1"
   }
 }
